@@ -278,3 +278,61 @@ FROM world_layoffs.layoffs_staging2;
 -- I like having them null because it makes it easier for calculations during the EDA (Exploratory Data Analysis) phase.
 -- so there isn't anything I want to change with the null values.
 
+-- 4. remove any columns and rows we need to
+
+SELECT *
+FROM world_layoffs.layoffs_staging2
+WHERE total_laid_off IS NULL;
+
+
+SELECT *
+FROM world_layoffs.layoffs_staging2
+WHERE total_laid_off IS NULL
+AND percentage_laid_off IS NULL;
+
+-- Delete Useless data we can't really use
+DELETE FROM world_layoffs.layoffs_staging2
+WHERE total_laid_off IS NULL
+AND percentage_laid_off IS NULL;
+
+SELECT * 
+FROM world_layoffs.layoffs_staging2;
+
+ALTER TABLE layoffs_staging2
+DROP COLUMN row_num;
+
+
+SELECT * 
+FROM world_layoffs.layoffs_staging2;
+
+
+
+-- 4. Remove unnecessary columns and rows
+
+-- Check rows where "total_laid_off" is NULL
+SELECT *
+FROM world_layoffs.layoffs_staging2
+WHERE total_laid_off IS NULL;
+
+-- Check rows where both "total_laid_off" and "percentage_laid_off" are NULL
+SELECT *
+FROM world_layoffs.layoffs_staging2
+WHERE total_laid_off IS NULL
+  AND percentage_laid_off IS NULL;
+
+-- Delete rows where both "total_laid_off" and "percentage_laid_off" are NULL since they are not useful
+DELETE FROM world_layoffs.layoffs_staging2
+WHERE total_laid_off IS NULL
+  AND percentage_laid_off IS NULL;
+
+-- Confirm the rows have been removed
+SELECT *
+FROM world_layoffs.layoffs_staging2;
+
+-- Drop the "row_num" column as it is no longer needed
+ALTER TABLE world_layoffs.layoffs_staging2
+DROP COLUMN row_num;
+
+-- Final check to ensure the table is clean
+SELECT *
+FROM world_layoffs.layoffs_staging2;
